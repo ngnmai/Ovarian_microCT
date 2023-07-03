@@ -83,7 +83,7 @@ print('x_test: ', x_test.shape)
 print('y_test: ', y_test.shape)
 
 # Saving all data in H5 file for convenience
-with h5py.File('data.hdf5', 'w') as hf:
+with h5py.File('P:/PycharmPorjects/pythonProject/storing/data.hdf5', 'w') as hf:
     x_train_file = hf.create_dataset('x_train', data=x_train,
                                      shape=(2816, 512, 512, 1), compression='gzip', chunks=True)
     y_train_file = hf.create_dataset('y_train', data=y_train,

@@ -8,7 +8,7 @@ from build_model import *
 
 
 # Load data
-with h5py.File('data.hdf5', 'r') as hf:
+with h5py.File('P:/PycharmPorjects/pythonProject/storing/data.hdf5', 'r') as hf:
     x_train = hf['x_train'][()]
     y_train = hf['y_train'][()]
     x_test = hf['x_test'][()]

@@ -9,3 +9,5 @@
 Sanjar, Karshiev, et al. "Improved U-Net: Fully convolutional network model for skin-lesion segmentation." Applied Sciences 10.10 (2020): 3658.
 
 https://sh-tsang.medium.com/tutorial-creating-hierarchical-data-format-hdf5-dataset-79cfc99d2613
+
+https://arxiv.org/pdf/1804.03999.pdf

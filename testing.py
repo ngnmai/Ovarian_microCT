@@ -5,11 +5,11 @@ PLotting loss function
 '''
 from library import *
 
-unet_model = tf.keras.models.load_model('P:/PycharmProjects/pythonProject/microCT_project/test_unet.h5')
+unet_model = tf.keras.models.load_model('P:/PycharmProjects/pythonProject/storing/test_unet.h5')
 #unet_model = tf.keras.models.load_model('P:/PycharmProjects/pythonProject/test_unet.h5')
 unet_model.summary()
 
-with h5py.File('data.hdf5', 'r') as hf:
+with h5py.File('P:/PycharmProjects/pythonProject/storing/data.hdf5', 'r') as hf:
     x_test = hf['x_test'][()]
     y_test = hf['y_test'][()]
 
