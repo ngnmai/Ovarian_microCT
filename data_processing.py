@@ -128,15 +128,14 @@ print('x_test: ', x_test.shape)
 print('y_test: ', y_test.shape)
 
 # Saving all data in H5 file for convenience
-'''
-with h5py.File('P:/PycharmPorjects/pythonProject/storing/data.hdf5', 'w') as hf:
-    x_train_file = hf.create_dataset('x_train', data=x_train,
-                                     shape=(2816, 512, 512, 1), compression='gzip', chunks=True)
-    y_train_file = hf.create_dataset('y_train', data=y_train,
-                                     shape=(2816, 512, 512, 1), compression='gzip', chunks=True)
-    x_test_file = hf.create_dataset('x_test', data=x_test,
-                                    shape=(704, 512, 512, 1), compression='gzip', chunks=True)
-    y_test_file = hf.create_dataset('y_test', data=y_test,
-                                    shape=(704, 512, 512, 1), compression='gzip', chunks=True)
 
-'''
+with h5py.File('P:/PycharmProjects/pythonProject/storing/data.hdf5', 'w') as hf:
+    x_train_file = hf.create_dataset('x_train', data=x_train,
+                                     shape=x_train.shape, compression='gzip', chunks=True)
+    y_train_file = hf.create_dataset('y_train', data=y_train,
+                                     shape=y_train.shape, compression='gzip', chunks=True)
+    x_test_file = hf.create_dataset('x_test', data=x_test,
+                                    shape=x_test.shape, compression='gzip', chunks=True)
+    y_test_file = hf.create_dataset('y_test', data=y_test,
+                                    shape=y_test.shape, compression='gzip', chunks=True)
+
