@@ -5,9 +5,7 @@ Preprocessing file when dealing with input data type .nii
 '''
 from library import *
 
-# filepath = 'P:/StudentDocuments/Documents/TESTING DATA/ct_scans/coronacases_org_001.nii'
-
-def preProcessing(filePath, outputPath, file_name, list_, flag, datatype):
+def preProcessing(filePath, outputPath, file_name, list_, axis_flag, datatype, first_index, amount_of_slices):
     '''
 
     scan = nib.load(filePath)
@@ -33,23 +31,41 @@ def preProcessing(filePath, outputPath, file_name, list_, flag, datatype):
     '''
     scan = nib.load(filePath)
     scanArray = scan.get_fdata()
-    scanArray = np.rot90(np.array(scanArray))
+    #scanArray = np.rot90(np.array(scanArray))
     scanArrayShape = scanArray.shape
     print(scanArrayShape)
-    for imgsize in range(scanArrayShape[2]):
-        img = cv2.resize(scanArray[..., imgsize],
+    imgsize = first_index
+    if axis_flag == 'x':
+        for i in range(amount_of_slices):
+            img = cv2.resize(scanArray[imgsize, :,:],
+                             dsize=(512, 512),
+                             interpolation=cv2.INTER_AREA).astype(datatype)
+            imgsize = imgsize + 1
+            list_.append(img[..., np.newaxis])
+
+    if axis_flag == 'y':
+        for i in range(amount_of_slices):
+            img = cv2.resize(scanArray[:, imgsize,:],
+                             dsize=(512, 512),
+                             interpolation=cv2.INTER_AREA).astype(datatype)
+            imgsize = imgsize + 1
+            list_.append(img[..., np.newaxis])
+
+    if axis_flag == 'z':
+        for i in range(amount_of_slices):
+            img = cv2.resize(scanArray[..., imgsize],
                          dsize=(512, 512),
                          interpolation=cv2.INTER_AREA).astype(datatype)
-        list_.append(img[..., np.newaxis])
-        #if flag:
-            #cv2.imwrite(outputPath + '/' + str(file_name) + '_Dim2_Slice' + str(imgsize) + '.png', img)
+            imgsize = imgsize + 1
+            list_.append(img[..., np.newaxis])
     return list_
 
+'''
 def resize_(filepath, outputpath, size, path):
     img = cv2.imread(filepath)
     resized_img = cv2.resize(img.astype('float'), (size, size), interpolation=cv2.INTER_CUBIC)
     cv2.imwrite(outputpath + str(path) + '_resize.png', resized_img)
-
+'''
 
 def split_(batch_x, batch_y, ratio):
     batch_x1, batch_x2, batch_y1, batch_y2 = train_test_split(batch_x, batch_y, train_size=ratio)
@@ -58,7 +74,10 @@ def split_(batch_x, batch_y, ratio):
 def normalize(input):
     min = input.min(axis = (1, 2, 3), keepdims = True)
     max = input.max(axis = (1, 2, 3), keepdims = True)
-    norm_input = (input - min) / (max - min)
+    if any(max == min):
+        norm_input = (input - min)
+    else:
+        norm_input = (input - min) / (max - min)
     return norm_input
 
 def load_img_from_folder(folder):
