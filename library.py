@@ -13,6 +13,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.optimizers import SGD
 from sklearn.model_selection import train_test_split
+from keras.preprocessing.image import ImageDataGenerator
 
 print('Importing necessary libraries successful')
 
